@@ -1,73 +1,84 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# NestJS Auth0 Authentication
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is a sample project demonstrating how to implement authentication using Auth0 in a NestJS application. Auth0 is a powerful authentication and identity management platform that allows you to add secure authentication to your applications with ease.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+- [Introduction](#introduction)
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+    - [Configuration](#configuration)
+    - [Run the Application](#run-the-application)
+- [Usage](#usage)
+    - [Protected Routes](#protected-routes)
+- [Contributing](#contributing)
+- [License](#license)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Introduction
 
-## Installation
+NestJS is a progressive Node.js framework for building efficient, scalable, and maintainable server-side applications. Auth0 is a widely-used authentication service that provides user authentication, identity management, and access control for your applications.
 
-```bash
-$ npm install
+This project serves as a starting point for integrating Auth0 authentication into your NestJS application, allowing you to secure your APIs and protect your routes.
+
+## Features
+
+- JWT-based authentication with Auth0.
+- Authentication guards to protect routes and endpoints.
+
+## Prerequisites
+
+Before getting started, make sure you have the following prerequisites installed:
+
+- Node.js and npm: You can download them from [nodejs.org](https://nodejs.org/).
+- Nest CLI: Install the Nest CLI globally using `npm install -g @nestjs/cli`.
+- Auth0 account: You'll need to sign up for an Auth0 account at [auth0.com](https://auth0.com/) and create an application to obtain your Auth0 credentials.
+
+## Getting Started
+
+### Configuration
+
+1. Clone the repository to your local machine:
+
+   ```bash
+   git clone https://github.com/danielvelastegui/auth-test.git
+   ```
+2. Navigate to the project folder:
+
+   ```bash
+    cd auth-test
+    ```
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
+4. Change data in .env file
+   ```bash
+   AUTH0_ISSUER_URL=yourdomain.auth0.com
+   AUTH0_AUDIENCE=youraudience
+   ``` 
+### Run the application:
+1. Run the application in development mode:
+   ```bash
+    npm run start:dev
+    ```
+2. Navigate to `http://localhost:3000` in your browser to 
+view the application.
+
+## Usage
+### Protected Routes
+The project includes an example protected route that requires authentication. 
+You can find it in `src/app.controller.ts`.
+```typescript
+@Get()
+@UseGuards(AuthGuard('jwt'))
+getHello(): string {
+  return this.appService.getHello();
+}
 ```
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+To access the protected route, you need to include a valid JWT token in the
+`Authorization` header of your HTTP request.
+```http request
+GET http://localhost:3000
+Authorization: Bearer YOUR_JWT_TOKEN
 ```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
